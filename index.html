@@ -1,0 +1,980 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Oʻzbekiston Respublikasi Vazirlar Mahkamasining qarori, 29.01.2026 yildagi 35-son</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: #111b2e;
+      --text: #e8eefc;
+      --muted: #b8c4e6;
+      --border: rgba(255,255,255,.12);
+      --ok: #22c55e;
+      --bad: #ef4444;
+      --warn: #f59e0b;
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1000px 600px at 10% 0%, rgba(59,130,246,.18), transparent 60%),
+                  radial-gradient(900px 500px at 90% 10%, rgba(34,197,94,.12), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+    }
+    header {
+      position: sticky; top: 0;
+      backdrop-filter: blur(10px);
+      background: rgba(11,18,32,.75);
+      border-bottom: 1px solid var(--border);
+      z-index: 10;
+    }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 14px 16px; }
+    h1 { font-size: 18px; margin: 0; }
+    .sub { color: var(--muted); font-size: 13px; margin-top: 6px; line-height: 1.35; }
+    .stats {
+      margin-top: 10px;
+      display: flex; flex-wrap: wrap; gap: 10px;
+      font-size: 13px; color: var(--muted);
+    }
+    .pill {
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.03);
+    }
+    main .wrap { padding-top: 18px; padding-bottom: 36px; }
+    .qcard {
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 14px 12px;
+      margin: 12px 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,.20);
+    }
+    .qhead {
+      display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .qnum {
+      font-weight: 800;
+      color: rgba(255,255,255,.92);
+      background: rgba(59,130,246,.18);
+      border: 1px solid rgba(59,130,246,.35);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+    }
+    .qtext { font-size: 15px; line-height: 1.4; }
+    .opts {
+      display: grid;
+      gap: 10px;
+    }
+    @media (min-width: 760px) {
+      .opts { grid-template-columns: 1fr 1fr; }
+    }
+    .optbtn {
+      text-align: left;
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      cursor: pointer;
+      transition: transform .03s ease, border-color .12s ease, background .12s ease;
+      line-height: 1.35;
+      user-select: none;
+    }
+    .optbtn:hover {
+      border-color: rgba(255,255,255,.22);
+      background: rgba(255,255,255,.05);
+    }
+    .optbtn:active { transform: scale(0.99); }
+    .optbtn[disabled] {
+      cursor: not-allowed;
+      opacity: .92;
+    }
+    .optbtn.correct {
+      border-color: rgba(34,197,94,.65);
+      background: rgba(34,197,94,.10);
+    }
+    .optbtn.wrong {
+      border-color: rgba(239,68,68,.65);
+      background: rgba(239,68,68,.10);
+    }
+    .feedback {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .badge {
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.03);
+    }
+    .badge.ok {
+      border-color: rgba(34,197,94,.55);
+      background: rgba(34,197,94,.10);
+      color: rgba(220,255,232,.95);
+    }
+    .badge.bad {
+      border-color: rgba(239,68,68,.55);
+      background: rgba(239,68,68,.10);
+      color: rgba(255,226,226,.95);
+    }
+    .muted { color: var(--muted); }
+    .topbtn {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      border: 1px solid var(--border);
+      background: rgba(17,27,46,.75);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 25px rgba(0,0,0,.25);
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Oʻzbekiston Respublikasi Vazirlar Mahkamasining 29.01.2026 yildagi 35-son qarorini mustahkamlash uchun test sinovi</h1>
+    <div class="sub">Buxoro viloyat G'ijduvon tuman Ijtimoiy xodimi: Shahzod Axmedov | +998916483830
+     
+    </div>
+    <div class="stats">
+      <div class="pill">Jami: <b id="total">0</b></div>
+      <div class="pill">To‘g‘ri: <b id="correct">0</b></div>
+      <div class="pill">Xato: <b id="wrong">0</b></div>
+      <div class="pill">Bajarilgan: <b id="done">0</b></div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap" id="app"></div>
+</main>
+
+<button class="topbtn" onclick="window.scrollTo({top:0, behavior:'smooth'})">↑ Tepaga</button>
+
+
+<script>
+const DATA = [
+{
+    "id": 1,
+    "type": "single",
+    "text": "Oʻzbekiston Respublikasi Vazirlar Mahkamasining 29.01.2026 yildagi 35-son qarori qaysi qonuniy hujjat ijrosini ta’minlash maqsadida qabul qilindi?",
+    "options": [
+      "Oʻzbekiston Respublikasi Prezidentining 2025-yil 26-dekabrdagi PF-258-son farmoni",
+      "Oʻzbekiston Respublikasi Prezidentining 2025-yil 27-martdagi PF-63-son farmoni",
+      "Oʻzbekiston Respublikasi Prezidentining 2023-yil 1-iyundagi PF-82-son farmoni",
+      "Oʻzbekiston Respublikasi Prezidentining 2025-yil 11-fevraldagi PF-20-son farmoni"
+    ],
+    "answer": "Oʻzbekiston Respublikasi Prezidentining 2025-yil 26-dekabrdagi PF-258-son farmoni",
+    "answer_index": 0
+},
+{
+    "id": 2,
+    "type": "single",
+    "text": "Ariza beruvchi oilasini Reyestrga kiritish uchun vakolatli organga qanday shakllarda murojaat qiladi?",
+    "options": [
+      "Davlat xizmatlari markazi, “Inson” ijtimoiy xizmatlar markaziga borgan holda, yashash manzili boʻyicha mahallaga biriktirilgan ijtimoiy xodim orqali",
+      "Davlat xizmatlari markazi, “Inson” ijtimoiy xizmatlar Markazi direktoriga oldiga borgan holda, yashash manzili boʻyicha mahallaga biriktirilgan ijtimoiy xodim orqali",
+      "Davlat xizmatlari markazi, “Inson” ijtimoiy xizmatlar markaziga borgan holda, Apellatsiya kengashiga murojaat qilgan holda",
+      "Davlat xizmatlari markazi, Apellatsiya kengashiga murojaat qilgan holda, yashash manzili boʻyicha mahallaga biriktirilgan ijtimoiy xodim orqali"
+    ],
+    "answer": "Davlat xizmatlari markazi, “Inson” ijtimoiy xizmatlar markaziga borgan holda, yashash manzili boʻyicha mahallaga biriktirilgan ijtimoiy xodim orqali",
+    "answer_index": 0
+},
+  {
+    "id": 3,
+    "type": "single",
+    "text": "Normativ daromad nima?",
+    "options": [
+      "oilaning daromadini rasmiy maʼlumotlar orqali tasdiqlash imkoni boʻlmaganda shartli ravishda qoʻllaniladigan daromad miqdori",
+      "oilaning rasmiy daromad miqdori",
+      "oilaning daromadini rasmiy maʼlumotlar orqali tasdiqlash imkoni boʻlganda shartli ravishda qoʻllaniladigan daromad miqdori",
+      "oilaning daromadini norasmiy maʼlumotlar orqali tasdiqlash imkoni boʻlmaganda shartli ravishda qoʻllaniladigan daromad miqdori"
+    ],
+    "answer": "oilaning daromadini rasmiy maʼlumotlar orqali tasdiqlash imkoni boʻlmaganda shartli ravishda qoʻllaniladigan daromad miqdori",
+    "answer_index": 0
+  },
+  {
+    "id": 4,
+    "type": "single",
+    "text": "Har bir oila tomonidan Reyestrga kiritish uchun ariza topshirish bir oyda necha marta amalga oshiriladi?",
+    "options": ["1 marta", "2 marta", "3 marta", "6 oyda 1 marta"],
+    "answer": "1 marta",
+    "answer_index": 0
+  },
+  {
+    "id": 5,
+    "type": "single",
+    "text": "Ariza beruvchining oilasini “davlat taʼminotidagi oila” va “kambagʻal oila” deb topishni rad etish uchun asoslar aniqlanmaganda ariza kimning axborot modulidagi shaxsiy kabinetiga yuboriladi?",
+    "options": [
+      "Ijtimoiy xodimning",
+      "“Inson” ijtimoiy xizmatlar markazi direktorining",
+      "“Inson” ijtimoiy xizmatlar markazi Ijtimoiy to’lovlar mutaxasis xodimining",
+      "Hokim yordamchining"
+    ],
+    "answer": "Ijtimoiy xodimning",
+    "answer_index": 0
+  },
+  {
+    "id": 6,
+    "type": "single",
+    "text": "Ijtimoiy xodim arizani necha ish kuni ichida fuqaro uyiga borib savolnoma o’tkazishi lozim?",
+    "options": ["3", "15", "30", "10"],
+    "answer": "3",
+    "answer_index": 0
+  },
+  {
+    "id": 7,
+    "type": "single",
+    "text": "Savolnoma tasdiqlanganda identifikatsiya qanday vositalar orqali amalga oshiriladi?",
+    "options": [
+      "Face-ID, elektron grafik imzo yoki SMS-kod",
+      "Face-ID, elektron raqamli imzo yoki SMS-kod",
+      "Face-ID, elektron grafik imzo yoki my.gov.uz orqali",
+      "Face-ID, elektron grafik imzo yoki SMS-ssilka orqali"
+    ],
+    "answer": "Face-ID, elektron raqamli imzo yoki SMS-kod",
+    "answer_index": 1
+  },
+  {
+    "id": 8,
+    "type": "single",
+    "text": "Dalolatnoma “mahalla yettiligi”ning kamida nechta aʼzosi tomonidan tasdiqlanishi lozim?",
+    "options": ["5 nafari", "3 nafari", "7 nafari", "1 nafari"],
+    "answer": "5 nafari",
+    "answer_index": 0
+  },
+  {
+    "id": 9,
+    "type": "single",
+    "text": "“Mahalla yettiligi” xulosani necha ish kuni ichida tasdiqlaydi?",
+    "options": ["3", "1", "15", "5"],
+    "answer": "3",
+    "answer_index": 0
+  },
+  {
+    "id": 10,
+    "type": "single",
+    "text": "Xulosa 3 ish kuni ichida tasdiqlanmasa nima bo‘ladi?",
+    "options": [
+      "Axborot modulida avtomatik tarzda tasdiqlanadi",
+      "Axborot modulida avtomatik rad etiladi",
+      "Hech qanday o‘zgarish bo‘lmaydi",
+      "Axborot moduliga kirish cheklanadi"
+    ],
+    "answer": "Axborot modulida avtomatik tarzda tasdiqlanadi",
+    "answer_index": 0
+  },
+  {
+    "id": 11,
+    "type": "single",
+    "text": "“Mahalla yettiligi” tasdiqlagan xulosa orqali “YAMIH” AT necha ish kuni ichida oilani ijtimoiy-iqtisodiy holatini yakuniy baholashdan oʻtkazadi?",
+    "options": ["3", "15", "5", "1"],
+    "answer": "3",
+    "answer_index": 0
+  },
+  {
+    "id": 12,
+    "type": "single",
+    "text": "Oilaning har bir aʼzosiga toʻgʻri keladigan bir oylik jami oʻrtacha daromad qanday aniqlanadi?",
+    "options": [
+      "Oxirgi uch oydagi jami daromadni oila aʼzolari soniga va uchga boʻlish orqali",
+      "Oxirgi uch oydagi jami daromadni oila aʼzolari soniga boʻlish orqali",
+      "Oxirgi olti oydagi jami daromadni oila aʼzolari soniga va uchga boʻlish orqali",
+      "Oxirgi olti oydagi jami daromadni oila aʼzolari soniga boʻlish orqali"
+    ],
+    "answer": "Oxirgi uch oydagi jami daromadni oila aʼzolari soniga va uchga boʻlish orqali",
+    "answer_index": 0
+  },
+  {
+    "id": 13,
+    "type": "single",
+    "text": "Boquvchisini yoʻqotganlik pensiyasi yoki nafaqasini olayotgan yoxud bolasi uchun aliment olayotgan ona (ota)ning oilasi qanday sifatida qabul qilinadi?",
+    "options": [
+      "Boquvchisini yoʻqotgan yoki bolasini yolgʻiz tarbiyalayotgan oila",
+      "Toʻliq bo‘lmagan yoki bolasini yolgʻiz tarbiyalayotgan oila",
+      "Boquvchisini yoʻqotgan yoki ajrimdagi oila",
+      "Toʻgʻri javob yoʻq"
+    ],
+    "answer": "Toʻliq bo‘lmagan yoki bolasini yolgʻiz tarbiyalayotgan oila",
+    "answer_index": 1
+  },
+  {
+    "id": 14,
+    "type": "single",
+    "text": "Bir oylik jami oʻrtacha daromad hisoblashda qaysi daromad kiritiladi?",
+    "options": [
+      "Mehnatga haq toʻlash tarzidagi daromadlar",
+      "Nogironligi boʻlgan bolalar nafaqasi",
+      "Dafn etish marosimi uchun nafaqalar",
+      "Homiladorlik va tugʻish nafaqasi"
+    ],
+    "answer": "Mehnatga haq toʻlash tarzidagi daromadlar",
+    "answer_index": 0
+  },
+  {
+    "id": 15,
+    "type": "single",
+    "text": "Bir oylik jami oʻrtacha daromad hisoblashda qaysi daromad kiritiladi?",
+    "options": [
+      "Mulkiy daromadlar",
+      "Nogironlik nafaqasi",
+      "Parvarishlash nafaqasi",
+      "Taʼlim stipendiyalari"
+    ],
+    "answer": "Mulkiy daromadlar",
+    "answer_index": 0
+  },
+  {
+    "id": 16,
+    "type": "single",
+    "text": "Bir oylik jami oʻrtacha daromad hisoblashda qaysi daromad kiritilmaydi?",
+    "options": [
+      "3 yoshgacha farzand uchun maktabgacha taʼlim kompensatsiyasi",
+      "Chet eldan pul oʻtkazmalari",
+      "Olingan alimentlar",
+      "Jamoat ishlaridan olingan ish haqi"
+    ],
+    "answer": "3 yoshgacha farzand uchun maktabgacha taʼlim kompensatsiyasi",
+    "answer_index": 0
+  },
+  {
+    "id": 17,
+    "type": "single",
+    "text": "Korxona ustav fondidagi ulush uchun normativ daromad mehnatga haq toʻlash eng kam miqdorining necha baravaridan kam boʻlmasligi kerak?",
+    "options": ["Ikki", "Bir", "Bir yarim", "Uch"],
+    "answer": "Bir",
+    "answer_index": 1
+  },
+  {
+    "id": 18,
+    "type": "single",
+    "text": "Toshkent shahrida oʻzini oʻzi band qilgan erkaklar uchun normativ daromad necha barobar?",
+    "options": ["2.7", "2.3", "1.8", "2.1"],
+    "answer": "2.7",
+    "answer_index": 0
+  },
+  {
+    "id": 19,
+    "type": "single",
+    "text": "Nukus shahri va viloyat markazlarida oʻzini oʻzi band qilgan erkaklar uchun normativ daromad necha barobar?",
+    "options": ["2.4", "2", "1.4", "1.7"],
+    "answer": "2.4",
+    "answer_index": 0
+  },
+  {
+    "id": 20,
+    "type": "single",
+    "text": "Boshqa hududlarda oʻzini oʻzi band qilgan ayollar uchun normativ daromad necha barobar?",
+    "options": ["1.4", "2.1", "1.7", "1.8"],
+    "answer": "1.4",
+    "answer_index": 0
+  },
+  {
+    "id": 21,
+    "type": "single",
+    "text": "Boshqa hududlarda oʻzini oʻzi band qilgan erkaklar uchun normativ daromad necha barobar?",
+    "options": ["1.8", "1.7", "2.1", "1.4"],
+    "answer": "1.8",
+    "answer_index": 0
+  },
+  {
+    "id": 22,
+    "type": "single",
+    "text": "Rossiya Federatsiyasidan pul oʻtkazmalari aniqlanmasa, daromad necha barobar hisoblanadi?",
+    "options": ["Ikki", "Uch", "Besh", "Oʻn"],
+    "answer": "Ikki",
+    "answer_index": 0
+  },
+  {
+    "id": 23,
+    "type": "single",
+    "text": "Xitoy Xalq Respublikasidan pul oʻtkazmalari aniqlanmasa, daromad necha barobar hisoblanadi?",
+    "options": ["Uch", "Ikki", "Besh", "Oʻn"],
+    "answer": "Uch",
+    "answer_index": 0
+  },
+  {
+    "id": 24,
+    "type": "single",
+    "text": "1 sotix yer uchun bir oylik daromad mehnatga haq toʻlashning necha barobarida hisoblanadi?",
+    "options": ["0.035", "0.03", "0.045", "0.025"],
+    "answer": "0.035",
+    "answer_index": 0
+  },
+  {
+    "id": 25,
+    "type": "single",
+    "text": "Har bir shartli bosh qoramol daromadi necha barobar hisoblanadi?",
+    "options": ["0.5", "0.4", "0.7", "500 ming soʻm"],
+    "answer": "0.5",
+    "answer_index": 0
+  },
+  {
+    "id": 26,
+    "type": "single",
+    "text": "Bir oyda buqa va sigirlar uchun daromad (MHTEKM 1 270 000 so‘m) qancha hisoblanadi?",
+    "options": ["635 000 so‘m", "750 000 so‘m", "500 000 so‘m", "625 000 so‘m"],
+    "answer": "635 000 so‘m",
+    "answer_index": 0
+  },
+  {
+    "id": 27,
+    "type": "single",
+    "text": "Bir oyda yosh qora mol uchun daromad (MHTEKM 1 270 000 so‘m) qancha hisoblanadi?",
+    "options": ["381 000 so‘m", "635 000 so‘m", "385 000 so‘m", "300 000 so‘m"],
+    "answer": "381 000 so‘m",
+    "answer_index": 0
+  },
+  {
+    "id": 28,
+    "type": "single",
+    "text": "Bir oyda ot va tuyalar uchun daromad (MHTEKM 1 270 000 so‘m) qancha hisoblanadi?",
+    "options": ["635 000 so‘m", "750 000 so‘m", "500 000 so‘m", "625 000 so‘m"],
+    "answer": "635 000 so‘m",
+    "answer_index": 0
+  },
+  {
+    "id": 29,
+    "type": "single",
+    "text": "Bir oyda katta yoshdagi cho‘chqalar uchun daromad (MHTEKM 1 270 000 so‘m) qancha hisoblanadi?",
+    "options": ["190 500 so‘m", "210 500 so‘m", "225 500 so‘m", "175 000 so‘m"],
+    "answer": "190 500 so‘m",
+    "answer_index": 0
+  },
+  {
+    "id": 30,
+    "type": "single",
+    "text": "Bir oyda qo‘ylar uchun daromad (MHTEKM 1 270 000 so‘m) qancha hisoblanadi?",
+    "options": ["63 500 so‘m", "75 000 so‘m", "45 000 so‘m", "51 500 so‘m"],
+    "answer": "63 500 so‘m",
+    "answer_index": 0
+  },
+  {
+    "id": 31,
+    "type": "single",
+    "text": "Bir oyda katta yoshdagi parrandalar uchun daromad (MHTEKM 1 270 000 so‘m) qancha hisoblanadi?",
+    "options": ["15 875 so‘m", "14 875 so‘m", "18 875 so‘m", "17 875 so‘m"],
+    "answer": "15 875 so‘m",
+    "answer_index": 0
+  },
+  {
+    "id": 32,
+    "type": "single",
+    "text": "Bir oyda yosh parrandalar uchun daromad (MHTEKM 1 270 000 so‘m) qancha hisoblanadi?",
+    "options": ["12 700 so‘m", "13 500 so‘m", "11 300 so‘m", "12 100 so‘m"],
+    "answer": "12 700 so‘m",
+    "answer_index": 0
+  },
+  {
+    "id": 33,
+    "type": "single",
+    "text": "Reyestrdagi oilalar qanday toifalarga bo‘linadi?",
+    "options": [
+      "“davlat taʼminotidagi oila”, “kambagʻal oila”, “kambagʻallik chegarasidagi oila”",
+      "“davlat taʼminotidagi oila”, “kambagʻallikka tushadigan oila”",
+      "“qizil toifa”, “sariq toifa”, “yashil toifa”",
+      "“umumiy kambagʻal oila”, “kambagʻallik chegarasidagi oila”"
+    ],
+    "answer": "“davlat taʼminotidagi oila”, “kambagʻal oila”, “kambagʻallik chegarasidagi oila”",
+    "answer_index": 0
+  },
+  {
+    "id": 34,
+    "type": "single",
+    "text": "Qanday holatda yengil avtotransport mavjud bo‘lsa rad etiladi?",
+    "options": [
+      "12 yildan oshmagan (nogiron bo‘lsa 7 yil), texnik soz va qidiruvda emas",
+      "12 yildan oshmagan (nogiron bo‘lsa 10 yil), texnik soz va qidiruvda emas",
+      "12 yildan oshmagan (I guruh nogiron bo‘lsa 7 yil), texnik soz va qidiruvda emas",
+      "12 yildan oshmagan (nogiron bo‘lsa 2 yil), texnik soz va qidiruvda emas"
+    ],
+    "answer": "12 yildan oshmagan (nogiron bo‘lsa 7 yil), texnik soz va qidiruvda emas",
+    "answer_index": 0
+  },
+  {
+    "id": 35,
+    "type": "single",
+    "text": "Tijorat banklaridagi depozit mablag‘lari MHTEKMning necha baravaridan ortiq bo‘lsa rad etiladi?",
+    "options": ["5", "10", "2", "3"],
+    "answer": "5",
+    "answer_index": 0
+  },
+  {
+    "id": 36,
+    "type": "single",
+    "text": "Yuk tashuvchi yoki maxsus texnika 15 yildan oshmagan bo‘lsa nima bo‘ladi?",
+    "options": ["15", "12", "7", "5"],
+    "answer": "15",
+    "answer_index": 0
+  },
+  {
+    "id": 37,
+    "type": "single",
+    "text": "Rad etilgan oilaga baholashda kamaytiruvchi koeffitsiyent necha foiz?",
+    "options": ["25%", "20%", "50%", "15%"],
+    "answer": "25%",
+    "answer_index": 0
+  },
+  {
+    "id": 38,
+    "type": "single",
+    "text": "Og‘ir hayotiy vaziyat mos kelmasa va tavsiya berilmasa necha kun ichida rad etiladi?",
+    "options": ["30", "15", "10", "3"],
+    "answer": "30",
+    "answer_index": 0
+  },
+  {
+    "id": 39,
+    "type": "single",
+    "text": "Mehnatga layoqatli va daromadi minimal isteʼmol xarajatidan kam oilalar qaysi toifa?",
+    "options": [
+      "“kambagʻal oila”",
+      "“kambagʻallik chegarasidagi oila”",
+      "“davlat taʼminotidagi oila”",
+      "To‘g‘ri javob yo‘q"
+    ],
+    "answer": "“kambagʻal oila”",
+    "answer_index": 0
+  },
+  {
+    "id": 40,
+    "type": "single",
+    "text": "Mehnatga layoqatsiz va daromadi minimal isteʼmol xarajatidan kam oilalar qaysi toifa?",
+    "options": [
+      "“davlat taʼminotidagi oila”",
+      "“kambagʻal oila”",
+      "“kambagʻallik chegarasidagi oila”",
+      "To‘g‘ri javob yo‘q"
+    ],
+    "answer": "“davlat taʼminotidagi oila”",
+    "answer_index": 0
+  },
+  {
+    "id": 41,
+    "type": "single",
+    "text": "Daromadi minimal isteʼmol xarajatining 1–1,5 baravar oralig‘ida bo‘lgan oilalar qaysi toifa?",
+    "options": [
+      "“kambagʻallik chegarasidagi oila”",
+      "“davlat taʼminotidagi oila”",
+      "“kambagʻal oila”",
+      "To‘g‘ri javob yo‘q"
+    ],
+    "answer": "“kambagʻallik chegarasidagi oila”",
+    "answer_index": 0
+  },
+  {
+    "id": 42,
+    "type": "single",
+    "text": "“Davlat taʼminotidagi oila” toifasida savolnoma qayta to‘ldirish muddati?",
+    "options": ["12 oy", "6 oy", "3 oy", "1 oy"],
+    "answer": "12 oy",
+    "answer_index": 0
+  },
+  {
+    "id": 43,
+    "type": "single",
+    "text": "“Kambagʻal oila” toifasida savolnoma qayta to‘ldirish muddati?",
+    "options": ["6 oy", "12 oy", "3 oy", "1 oy"],
+    "answer": "6 oy",
+    "answer_index": 0
+  },
+  {
+    "id": 44,
+    "type": "single",
+    "text": "“Kambagʻallik chegarasidagi oila” qachon Reyestrdan chiqariladi?",
+    "options": ["12 oydan keyin", "6 oydan keyin", "24 oydan keyin", "3 oydan keyin"],
+    "answer": "12 oydan keyin",
+    "answer_index": 0
+  },
+  {
+    "id": 45,
+    "type": "single",
+    "text": "Individual reja necha ish kuni ichida ishlab chiqiladi?",
+    "options": ["10", "15", "1", "3"],
+    "answer": "10",
+    "answer_index": 0
+  },
+  {
+    "id": 46,
+    "type": "single",
+    "text": "Reyestrga kiritilgandan so‘ng hokim yordamchi va ijtimoiy xodim necha kun ichida individual reja tuzib “mahalla yettiligi”ga yuboradi?",
+    "options": ["3", "1", "10", "15"],
+    "answer": "3",
+    "answer_index": 0
+  },
+  {
+    "id": 47,
+    "type": "single",
+    "text": "“Mahalla yettiligi” individual rejani necha kun davomida tasdiqlaydi?",
+    "options": ["2", "3", "1", "10"],
+    "answer": "2",
+    "answer_index": 0
+  },
+  {
+    "id": 48,
+    "type": "single",
+    "text": "Hokim yordamchi va ijtimoiy xodim individual rejani amalga oshirilishini qancha muddatda oʻrganadi?",
+    "options": [
+      "Har uch oyda kamida bir marotaba",
+      "Har olti oyda kamida bir marotaba",
+      "Har besh oyda kamida bir marotaba",
+      "Har yilda kamida bir marotaba"
+    ],
+    "answer": "Har uch oyda kamida bir marotaba",
+    "answer_index": 0
+  },
+  {
+    "id": 49,
+    "type": "single",
+    "text": "Individual rejaga daromadli mehnat va tadbirkorlik yo‘nalishidagi xizmatlarni kim kiritadi?",
+    "options": ["Hokim yordamchi", "Ijtimoiy xodim", "Soliq inspektori", "Mahalla raisi"],
+    "answer": "Hokim yordamchi",
+    "answer_index": 0
+  },
+  {
+    "id": 50,
+    "type": "single",
+    "text": "Individual rejaga taʼlim va ijtimoiy xizmat yo‘nalishidagi xizmatlarni kim kiritadi?",
+    "options": ["Ijtimoiy xodim", "Hokim yordamchi", "Mahalla raisi", "Yoshlar yetakchisi"],
+    "answer": "Ijtimoiy xodim",
+    "answer_index": 0
+  },
+  {
+    "id": 51,
+    "type": "single",
+    "text": "Daromadi minimal isteʼmol xarajatining 1–1,25 baravarigacha bo‘lsa nafaqa necha foiz to‘lanadi?",
+    "options": ["75%", "50%", "100%", "80%"],
+    "answer": "75%",
+    "answer_index": 0
+  },
+  {
+    "id": 52,
+    "type": "single",
+    "text": "Daromadi minimal isteʼmol xarajatining 1,25–1,5 baravarigacha bo‘lsa nafaqa necha foiz to‘lanadi?",
+    "options": ["50%", "75%", "100%", "80%"],
+    "answer": "50%",
+    "answer_index": 0
+  },
+  {
+    "id": 53,
+    "type": "single",
+    "text": "“Kambagʻallik chegarasidagi oila”ga oʻtkazilgandan 6 oy o‘tgach nima bo‘ladi?",
+    "options": [
+      "Bolalar nafaqasi yoki moddiy yordam to‘lash to‘xtatiladi",
+      "25% to‘lanadi",
+      "Reyestrdan chiqadi",
+      "Qayta tayinlanadi"
+    ],
+    "answer": "Bolalar nafaqasi yoki moddiy yordam to‘lash to‘xtatiladi",
+    "answer_index": 0
+  },
+  {
+    "id": 54,
+    "type": "single",
+    "text": "35-son qaror qachon qabul qilingan?",
+    "options": ["29.01.2026", "02.02.2026", "05.12.2025", "15.01.2026"],
+    "answer": "29.01.2026",
+    "answer_index": 0
+  },
+  {
+    "id": 55,
+    "type": "single",
+    "text": "Apellyatsiya kengashi qanday organ?",
+    "options": [
+      "Tuman (shahar) hokimliklari huzuridagi kollegial-maslahat organi",
+      "“INSON” markazi huzuridagi organ",
+      "Fuqaro murojaatini ijobiy qiluvchi organ",
+      "Sudga daʼvo kirituvchi organ"
+    ],
+    "answer": "Tuman (shahar) hokimliklari huzuridagi kollegial-maslahat organi",
+    "answer_index": 0
+  },
+  {
+    "id": 56,
+    "type": "single",
+    "text": "Apellyatsiya kengashi shikoyatni ko‘rib chiqqani uchun to‘lov bormi?",
+    "options": ["To‘lov undirilmaydi", "0.5 baravar", "0.25 baravar", "0.75 baravar"],
+    "answer": "To‘lov undirilmaydi",
+    "answer_index": 0
+  },
+  {
+    "id": 57,
+    "type": "single",
+    "text": "Apellyatsiya kengashining nechta asosiy vazifasi bor?",
+    "options": ["2", "3", "4", "5"],
+    "answer": "3",
+    "answer_index": 1
+  },
+  {
+    "id": 58,
+    "type": "single",
+    "text": "“Davlat taʼminotidagi oila” aʼzolari uchun davlat xizmatlari narxi necha foiz?",
+    "options": ["25", "50", "75", "100"],
+    "answer": "25",
+    "answer_index": 0
+  },
+  {
+    "id": 59,
+    "type": "single",
+    "text": "“Kambagʻal oila” va I–II guruh nogironlari uchun davlat xizmatlari narxi necha foiz?",
+    "options": ["50", "25", "75", "100"],
+    "answer": "50",
+    "answer_index": 0
+  },
+  {
+    "id": 60,
+    "type": "single",
+    "text": "Suv tarmog‘iga ulashda “kambagʻal oila” uchun chegirma necha foiz?",
+    "options": ["50", "25", "75", "100"],
+    "answer": "50",
+    "answer_index": 0
+  },
+  {
+    "id": 61,
+    "type": "single",
+    "text": "Suv tarmog‘iga ulashda “davlat taʼminotidagi oila” uchun chegirma necha foiz?",
+    "options": ["75", "50", "25", "100"],
+    "answer": "75",
+    "answer_index": 0
+  },
+  {
+    "id": 62,
+    "type": "single",
+    "text": "ERI kaliti sertifikatida “kambagʻal oila” uchun chegirma necha foiz?",
+    "options": ["50", "75", "25", "100"],
+    "answer": "50",
+    "answer_index": 0
+  },
+  {
+    "id": 63,
+    "type": "single",
+    "text": "ERI kaliti sertifikatida “davlat taʼminotidagi oila” uchun chegirma necha foiz?",
+    "options": ["75", "50", "25", "100"],
+    "answer": "75",
+    "answer_index": 0
+  },
+  {
+    "id": 64,
+    "type": "single",
+    "text": "Ixtisoslashtirilgan maktab-internatlarda necha foiz o‘quvchi to‘lovdan ozod qilinadi?",
+    "options": ["15", "10", "20", "25"],
+    "answer": "15",
+    "answer_index": 0
+  },
+  {
+    "id": 65,
+    "type": "single",
+    "text": "Davlat teatri va konsertlarda chegirma necha foizgacha?",
+    "options": ["50", "75", "25", "100"],
+    "answer": "50",
+    "answer_index": 0
+  },
+  {
+    "id": 66,
+    "type": "single",
+    "text": "Davlat xizmatlari markazlari orqali xizmatda “kambagʻal oila” uchun chegirma?",
+    "options": ["50", "75", "25", "100"],
+    "answer": "50",
+    "answer_index": 0
+  },
+  {
+    "id": 67,
+    "type": "single",
+    "text": "Davlat xizmatlari markazlari orqali xizmatda “davlat taʼminotidagi oila” uchun chegirma?",
+    "options": ["75", "50", "25", "100"],
+    "answer": "75",
+    "answer_index": 0
+  },
+  {
+    "id": 68,
+    "type": "single",
+    "text": "“Davlat taʼminotidagi oila” uchun quyosh paneliga subsidiya BHMning necha baravarigacha?",
+    "options": ["100", "50", "80", "75"],
+    "answer": "100",
+    "answer_index": 0
+  }];
+
+const STORAGE_USED = "usedQuestions";
+const STORAGE_STATS = "globalStats";
+
+let stats = { correct: 0, wrong: 0, done: 0 };
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+function getUsed() {
+  return JSON.parse(localStorage.getItem(STORAGE_USED)) || [];
+}
+
+function saveUsed(arr) {
+  localStorage.setItem(STORAGE_USED, JSON.stringify(arr));
+}
+
+function getGlobalStats() {
+  return JSON.parse(localStorage.getItem(STORAGE_STATS)) || {
+    totalTests: 0,
+    totalCorrect: 0,
+    totalQuestions: 0,
+    bestScore: 0
+  };
+}
+
+function saveGlobalStats(data) {
+  localStorage.setItem(STORAGE_STATS, JSON.stringify(data));
+}
+
+function updateHeaderStats() {
+  document.getElementById('correct').textContent = stats.correct;
+  document.getElementById('wrong').textContent = stats.wrong;
+  document.getElementById('done').textContent = stats.done;
+}
+
+function render() {
+  const app = document.getElementById('app');
+  app.innerHTML = '';
+
+  stats = { correct: 0, wrong: 0, done: 0 };
+  updateHeaderStats();
+
+  let used = getUsed();
+
+  if (used.length >= DATA.length) {
+    localStorage.removeItem(STORAGE_USED);
+    used = [];
+  }
+
+  const unused = DATA.filter(q => !used.includes(q.id));
+  const selected = shuffle([...unused]).slice(0, 20);
+
+  saveUsed([...used, ...selected.map(q => q.id)]);
+
+  document.getElementById('total').textContent = selected.length;
+
+  selected.forEach((q, idx) => {
+    const card = document.createElement('section');
+    card.className = 'qcard';
+
+    card.innerHTML = `
+      <div class="qhead">
+        <div class="qnum">#${idx + 1}</div>
+        <div class="qtext">${q.text}</div>
+      </div>
+    `;
+
+    const optsWrap = document.createElement('div');
+    optsWrap.className = 'opts';
+
+    const options = shuffle(q.options.map((t, i) => ({
+      text: t,
+      isCorrect: i === 0
+    })));
+
+    const feedback = document.createElement('div');
+    feedback.className = 'feedback';
+    feedback.innerHTML = `<span class="muted">Javobni tanlang.</span>`;
+
+    let answered = false;
+
+    options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'optbtn';
+      btn.textContent = opt.text;
+
+      btn.onclick = () => {
+        if (answered) return;
+        answered = true;
+
+        [...optsWrap.children].forEach(b => b.disabled = true);
+
+        if (opt.isCorrect) {
+          btn.classList.add('correct');
+          stats.correct++;
+        } else {
+          btn.classList.add('wrong');
+          const correctBtn = [...optsWrap.children]
+            .find(b => options.find(o => o.text === b.textContent).isCorrect);
+          if (correctBtn) correctBtn.classList.add('correct');
+          stats.wrong++;
+        }
+
+        stats.done++;
+        updateHeaderStats();
+
+        if (stats.done === selected.length) {
+          finishTest(selected.length);
+        }
+      };
+
+      optsWrap.appendChild(btn);
+    });
+
+    card.appendChild(optsWrap);
+    card.appendChild(feedback);
+    app.appendChild(card);
+  });
+}
+
+function finishTest(total) {
+  const percent = Math.round((stats.correct / total) * 100);
+  let global = getGlobalStats();
+
+  global.totalTests++;
+  global.totalCorrect += stats.correct;
+  global.totalQuestions += total;
+  if (percent > global.bestScore) global.bestScore = percent;
+
+  saveGlobalStats(global);
+
+  const avg = Math.round((global.totalCorrect / global.totalQuestions) * 100);
+
+  const resultBox = document.createElement('div');
+  resultBox.className = 'qcard';
+  resultBox.style.textAlign = "center";
+
+  resultBox.innerHTML = `
+    <h2>Test yakunlandi 🎯</h2>
+    <h1>${percent}%</h1>
+    <p>${stats.correct} / ${total}</p>
+    <hr style="margin:15px 0; opacity:.2">
+    <h3>Umumiy reyting 📊</h3>
+    <p>📌 Ishlangan testlar: <b>${global.totalTests}</b></p>
+    <p>⭐ Eng yuqori natija: <b>${global.bestScore}%</b></p>
+    <p>📈 O‘rtacha natija: <b>${avg}%</b></p>
+    <button onclick="location.reload()" class="optbtn" style="margin-top:12px">
+      Yangi 20 ta test
+    </button>
+  `;
+
+  document.getElementById('app').appendChild(resultBox);
+
+  window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+}
+
+render();
+</script>
+
+
+</body>
+</html>
